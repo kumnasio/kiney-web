@@ -1,0 +1,286 @@
+/* Tokens: ver web/DESIGN.md */
+:root {
+    --canvas: #0b0a09;
+    --surface: #141311;
+    --surface-raised: #1c1a17;
+    --hairline: rgba(239, 232, 218, 0.10);
+    --hairline-strong: rgba(239, 232, 218, 0.18);
+    --cream: #efe8da;
+    --cream-dim: #c9c2b4;
+    --muted: #9a948a;
+    --ink: #0b0a09;
+    --link: #2997ff;
+    --discord: #5865f2;
+    --amazon: #ff9900;
+    --amazon-hover: #ffad33;
+
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
+
+    --r-frame: 28px;
+    --r-card: 20px;
+    --r-thumb: 14px;
+    --r-pill: 999px;
+
+    --gutter: clamp(12px, 1.6vw, 20px);
+    --section-gap: clamp(96px, 14vw, 160px);
+    --content-max: 1120px;
+
+    /* Liquid Glass */
+    --glass-fill: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+    --glass-fill-strong: linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.10) 100%);
+    --glass-blur: blur(22px) saturate(180%);
+    --glass-edge: rgba(255, 255, 255, 0.18);
+    --glass-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 10px 30px rgba(0, 0, 0, 0.35);
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --fast: 180ms;
+    --base: 320ms;
+
+    color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    color: var(--cream);
+}
+
+html {
+    background-color: var(--canvas);
+    -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button,
+input,
+textarea {
+    touch-action: manipulation;
+}
+
+/* Luz ambiental cálida detrás del contenido, para que el cristal tenga algo que desenfocar */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(40vw 40vw at 12% 30%, rgba(214, 150, 92, 0.16), transparent 70%),
+        radial-gradient(45vw 45vw at 88% 70%, rgba(120, 132, 170, 0.14), transparent 70%),
+        radial-gradient(30vw 30vw at 60% 105%, rgba(239, 232, 218, 0.07), transparent 70%);
+}
+
+body {
+    position: relative;
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.022em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: var(--link);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+section[id] {
+    scroll-margin-top: 112px;
+}
+
+/* ---------- Bloques compartidos ---------- */
+
+.section {
+    width: min(100% - 2 * var(--gutter) - 24px, var(--content-max));
+    margin: var(--section-gap) auto 0;
+}
+
+.section-head {
+    max-width: 760px;
+    margin: 0 auto clamp(40px, 6vw, 64px);
+    text-align: center;
+}
+
+.eyebrow {
+    display: block;
+    margin-bottom: 14px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.display {
+    margin: 0;
+    text-wrap: balance;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+}
+
+.lead {
+    margin: 18px auto 0;
+    text-wrap: pretty;
+    max-width: 620px;
+    color: var(--muted);
+    font-size: clamp(1.06rem, 1.6vw, 1.31rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+}
+
+/* Material de cristal (Liquid Glass) */
+.glass {
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-edge);
+    box-shadow: var(--glass-shadow);
+}
+
+/* Botón primario: píldora de cristal + círculo crema con flecha */
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 6px 6px 6px 22px;
+    border: 1px solid var(--glass-edge);
+    border-radius: var(--r-pill);
+    background: var(--glass-fill-strong);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
+    color: var(--cream);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.016em;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color var(--fast) var(--ease),
+        border-color var(--fast) var(--ease),
+        transform var(--fast) var(--ease);
+}
+
+.btn:hover {
+    border-color: rgba(255, 255, 255, 0.34);
+    background-color: rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-arrow {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 13px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: transform var(--base) var(--ease);
+}
+
+.btn:hover .btn-arrow {
+    transform: translateX(3px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Botón secundario */
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border: 1px solid var(--glass-edge);
+    border-radius: var(--r-pill);
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    color: var(--cream);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+
+.btn-ghost:hover {
+    background-color: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.34);
+    text-decoration: none;
+}
+
+/* Hueco para imágenes que aún no existen */
+.placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--muted);
+    font-size: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
