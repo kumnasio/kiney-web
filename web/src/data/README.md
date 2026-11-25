@@ -1,5 +1,23 @@
 # Cómo actualizar los productos de la web
 
+## Flujo actual (el que usamos)
+
+Los datos están en la hoja **"kiney-web · productos"** de Google Sheets (privada), con una pestaña por
+categoría:
+
+- `Setup · PC` y `Setup · Periféricos`, con las columnas tipo, modelo, precio, imagen, enlace y visible.
+- `Reco · <Categoría>`, con las columnas nombre, por_que, precio, imagen, enlace, destacado y visible.
+  El nombre de la pestaña sin el prefijo `Reco · ` es la categoría que sale en los filtros.
+
+Para cambiar algo, editas la hoja y le pides a Claude "actualiza la web". Claude lee las pestañas, las
+junta en `web/public/data/setup.csv` y `web/public/data/recomendaciones.csv`, comprueba que compila
+y lo guarda en un commit.
+
+---
+
+## Alternativa: lectura en directo desde la web (opcional)
+
+
 Los productos de **Mi setup** y de la página **/recomendaciones** salen de una hoja de Google
 Sheets. Cuando cambias la hoja, la web se actualiza sola, sin tocar código ni volver a publicar.
 Google tarda unos 5 minutos en refrescar la versión publicada.
