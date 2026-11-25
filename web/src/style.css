@@ -81,7 +81,7 @@ body::before {
     z-index: -1;
     pointer-events: none;
     background:
-        radial-gradient(40vw 40vw at 12% 30%, rgba(214, 150, 92, 0.16), transparent 70%),
+        radial-gradient(40vw 40vw at 12% 30%, rgba(127, 92, 214, 0.16), transparent 70%),
         radial-gradient(45vw 45vw at 88% 70%, rgba(120, 132, 170, 0.14), transparent 70%),
         radial-gradient(30vw 30vw at 60% 105%, rgba(239, 232, 218, 0.07), transparent 70%);
 }
