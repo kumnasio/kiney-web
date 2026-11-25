@@ -17,3 +17,7 @@ npm-debug.log*
 
 # Claude Code: ajustes personales (no compartir)
 .claude/settings.local.json
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
+# taste-skill: estado de sus comprobaciones
+.taste-skill/
