@@ -1,69 +1,70 @@
 <template>
-    <section class="setup">
+    <section id="setup" class="section" aria-labelledby="setup-title">
 
-        <div class="setup-header">
-            <h1>Mi setup</h1>
+        <header class="section-head">
+            <span class="eyebrow">Mi setup</span>
+            <h2 id="setup-title" class="display">Lo que uso cada día.</h2>
+            <p class="lead">
+                Cada pieza de mi escritorio, elegida y probada.
+            </p>
 
-            <div class="switch-container">
+            <div class="switch" role="group" aria-label="Categoría">
                 <button
-                    :class="{ active: selectedCategory === 'pc' }"
+                    type="button"
+                    :aria-pressed="selectedCategory === 'pc'"
                     @click="selectedCategory = 'pc'"
                 >
                     PC
                 </button>
 
                 <button
-                    :class="{ active: selectedCategory === 'perifericos' }"
+                    type="button"
+                    :aria-pressed="selectedCategory === 'perifericos'"
                     @click="selectedCategory = 'perifericos'"
                 >
                     Periféricos
                 </button>
             </div>
-        </div>
+        </header>
 
 
         <div class="products">
-
             <article
                 v-for="product in currentProducts"
-                :key="product.id"
+                :key="selectedCategory + product.id"
                 class="product"
             >
-
                 <div class="product-image">
                     <img
+                        v-if="product.image"
                         :src="product.image"
-                        :alt="product.name"
+                        :alt="product.description"
+                        loading="lazy"
                     >
+                    <div v-else class="placeholder" aria-hidden="true">
+                        <i :class="['pi', product.icon]"></i>
+                    </div>
                 </div>
 
                 <div class="product-info">
+                    <span class="product-kind">{{ product.name }}</span>
+                    <h3>{{ product.description }}</h3>
 
-                    <h2>
-                        {{ product.name }}
-                    </h2>
+                    <div class="product-foot">
+                        <span class="price">{{ product.price }}</span>
 
-                    <p>
-                        {{ product.description }}
-                    </p>
-
-                    <span class="price">
-                        {{ product.price }}
-                    </span>
-
-                    <a
-                        :href="product.affiliateLink"
-                        target="_blank"
-                        rel="noopener noreferrer sponsored"
-                        class="amazon-button"
-                    >
-                        Ver en Amazon
-                    </a>
-
+                        <a
+                            :href="product.affiliateLink"
+                            target="_blank"
+                            rel="noopener noreferrer sponsored"
+                            class="btn-ghost"
+                        >
+                            Ver en Amazon
+                            <i class="pi pi-arrow-up-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
                 </div>
-
             </article>
-
         </div>
 
     </section>
@@ -86,6 +87,7 @@ export default {
                     description: 'AMD Ryzen 7 7800X3D',
                     price: '399,99 €',
                     image: '',
+                    icon: 'pi-microchip',
                     affiliateLink: 'TU_LINK_DE_AFILIADO'
                 },
 
@@ -95,6 +97,7 @@ export default {
                     description: 'NVIDIA GeForce RTX 4080',
                     price: '999,99 €',
                     image: '',
+                    icon: 'pi-desktop',
                     affiliateLink: 'TU_LINK_DE_AFILIADO'
                 },
 
@@ -104,6 +107,7 @@ export default {
                     description: '32 GB DDR5',
                     price: '129,99 €',
                     image: '',
+                    icon: 'pi-server',
                     affiliateLink: 'TU_LINK_DE_AFILIADO'
                 }
             ],
@@ -116,6 +120,7 @@ export default {
                     description: 'Teclado mecánico',
                     price: '99,99 €',
                     image: '',
+                    icon: 'pi-th-large',
                     affiliateLink: 'TU_LINK_DE_AFILIADO'
                 },
 
@@ -125,6 +130,7 @@ export default {
                     description: 'Ratón gaming inalámbrico',
                     price: '79,99 €',
                     image: '',
+                    icon: 'pi-bolt',
                     affiliateLink: 'TU_LINK_DE_AFILIADO'
                 },
 
@@ -134,6 +140,7 @@ export default {
                     description: 'Auriculares gaming',
                     price: '149,99 €',
                     image: '',
+                    icon: 'pi-headphones',
                     affiliateLink: 'TU_LINK_DE_AFILIADO'
                 }
             ]
@@ -159,78 +166,47 @@ export default {
 
 <style scoped>
 
-.setup {
-    width: 80%;
-    max-width: 1400px;
-
-    margin: 100px auto;
-
-    color: #f5f5f5;
-}
-
-
-/* HEADER */
-
-.setup-header {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 40px;
-}
-
-
-.setup-header h1 {
-    margin: 0;
-
-    font-size: 36px;
-}
-
-
 /* SWITCH */
 
-.switch-container {
-    display: flex;
+.switch {
+    display: inline-flex;
 
+    margin-top: 32px;
     padding: 4px;
 
-    background: #181818;
-
-    border: 1px solid #303030;
-
-    border-radius: 30px;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-pill);
 }
 
-
-.switch-container button {
+.switch button {
     border: none;
 
-    padding: 10px 20px;
+    padding: 9px 20px;
 
-    border-radius: 25px;
+    border-radius: var(--r-pill);
 
     background: transparent;
+    color: var(--muted);
 
-    color: #aaa;
-
+    font: inherit;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+        background-color var(--fast) var(--ease),
+        color var(--fast) var(--ease);
 }
 
-
-.switch-container button:hover {
-    color: white;
+.switch button:hover {
+    color: var(--cream);
 }
 
-
-.switch-container button.active {
-    background: #f1f1f1;
-    color: #111;
+.switch button[aria-pressed="true"] {
+    background: var(--cream);
+    color: var(--ink);
 }
 
 
@@ -238,146 +214,95 @@ export default {
 
 .products {
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
-
-    gap: 25px;
+    gap: 20px;
 }
-
 
 .product {
     overflow: hidden;
 
-    background: #151515;
-
-    border: 1px solid #292929;
-
-    border-radius: 15px;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-card);
 
     transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
+        transform var(--base) var(--ease),
+        border-color var(--base) var(--ease);
 }
-
 
 .product:hover {
-    transform: translateY(-5px);
-
-    border-color: #444;
+    transform: translateY(-2px);
+    border-color: var(--hairline-strong);
 }
-
-
-/* IMAGE */
 
 .product-image {
-    width: 100%;
-
-    aspect-ratio: 16 / 10;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    background: #202020;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--surface-raised);
 }
-
 
 .product-image img {
-    width: 80%;
-    height: 80%;
-
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    padding: 10%;
+
+    transition: transform var(--base) var(--ease);
 }
 
-
-/* INFO */
+.product:hover .product-image img {
+    transform: scale(1.03);
+}
 
 .product-info {
-    padding: 20px;
+    padding: 20px 22px 22px;
 }
 
+.product-kind {
+    color: var(--muted);
+    font-size: 13px;
+}
 
-.product-info h2 {
-    margin: 0 0 10px;
+.product-info h3 {
+    margin: 4px 0 20px;
 
     font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
 }
 
-
-.product-info p {
-    margin: 0 0 15px;
-
-    color: #aaa;
-
-    line-height: 1.5;
+.product-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
 }
-
 
 .price {
-    display: block;
-
-    margin-bottom: 15px;
-
-    font-size: 18px;
-    font-weight: 700;
-}
-
-
-/* AMAZON */
-
-.amazon-button {
-    display: inline-block;
-
-    padding: 10px 18px;
-
-    border-radius: 8px;
-
-    background: #ff9900;
-    color: #111;
-
-    text-decoration: none;
-
+    font-size: 17px;
     font-weight: 600;
-
-    transition: 0.2s ease;
+    font-variant-numeric: tabular-nums;
 }
 
-
-.amazon-button:hover {
-    background: #ffb52e;
+.product-foot .btn-ghost {
+    padding: 8px 14px;
+    font-size: 14px;
 }
 
 
 /* RESPONSIVE */
 
 @media (max-width: 900px) {
-
     .products {
         grid-template-columns: repeat(2, 1fr);
     }
-
 }
 
-
 @media (max-width: 600px) {
-
-    .setup {
-        width: 90%;
-    }
-
-    .setup-header {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 20px;
-    }
-
     .products {
         grid-template-columns: 1fr;
     }
-
 }
 
 </style>

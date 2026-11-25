@@ -1,53 +1,63 @@
 <template>
-    <section class="contact">
+    <section id="contacto" class="section" aria-labelledby="contacto-title">
 
-        <div class="contact-header">
-            <h1>Contacto - Business</h1>
-
-            <p>
-                Puedes contactarme enviando un correo a
-                <a href="mailto:kiney.contact@gmail.com">
-                    kiney.contact@gmail.com
-                </a>
-                o directamente rellenando este formulario
+        <header class="section-head">
+            <span class="eyebrow">Business</span>
+            <h2 id="contacto-title" class="display">Hablemos.</h2>
+            <p class="lead">
+                Escríbeme a
+                <a href="mailto:kiney.contact@gmail.com">kiney.contact@gmail.com</a>
+                o rellena este formulario.
             </p>
-        </div>
+        </header>
 
 
         <form class="contact-form" @submit.prevent="submitForm">
 
             <div class="form-row">
+                <label class="field">
+                    <span>Nombre</span>
+                    <input
+                        v-model="form.name"
+                        type="text"
+                        name="name"
+                        autocomplete="name"
+                        placeholder="Tu nombre…"
+                        required
+                    >
+                </label>
 
-                <input
-                    v-model="form.name"
-                    type="text"
-                    placeholder="Nombre"
-                    required
-                >
-
-                <input
-                    v-model="form.subject"
-                    type="text"
-                    placeholder="Asunto"
-                    required
-                >
-
+                <label class="field">
+                    <span>Asunto</span>
+                    <input
+                        v-model="form.subject"
+                        type="text"
+                        name="subject"
+                        autocomplete="off"
+                        placeholder="Colaboración, patrocinio…"
+                        required
+                    >
+                </label>
             </div>
 
+            <label class="field">
+                <span>Mensaje</span>
+                <textarea
+                    v-model="form.message"
+                    name="message"
+                    placeholder="Cuéntame tu idea…"
+                    required
+                ></textarea>
+            </label>
 
-            <textarea
-                v-model="form.message"
-                placeholder="Mensaje"
-                required
-            ></textarea>
+            <div class="form-foot">
+                <p class="status" role="status" aria-live="polite">{{ status }}</p>
 
-
-            <button
-                type="submit"
-                :disabled="sending"
-            >
-                {{ sending ? 'Enviando...' : 'Enviar' }}
-            </button>
+                <button type="submit" class="btn" :disabled="sending">
+                    {{ sending ? 'Enviando…' : 'Enviar' }}
+                    <span class="btn-arrow" aria-hidden="true"><i class="pi pi-send"></i></span>
+                </button>
+            </div>
 
         </form>
 
@@ -62,6 +72,7 @@ export default {
     data() {
         return {
             sending: false,
+            status: '',
 
             form: {
                 name: '',
@@ -75,20 +86,18 @@ export default {
         async submitForm() {
 
             this.sending = true
+            this.status = ''
 
             try {
 
                 console.log('Formulario enviado:', this.form)
 
                 /*
-                 * Aquí posteriormente puedes hacer:
-                 *
-                 * await fetch(...)
-                 *
-                 * para enviar el formulario a tu backend
+                 * TODO: el formulario aún no envía nada.
+                 * Aquí irá el fetch(...) a tu backend o servicio de formularios.
                  */
 
-                alert('Mensaje enviado correctamente')
+                this.status = 'Mensaje enviado. Te responderé lo antes posible.'
 
                 this.form = {
                     name: '',
@@ -100,7 +109,7 @@ export default {
 
                 console.error('Error enviando el formulario:', error)
 
-                alert('Ha ocurrido un error al enviar el mensaje')
+                this.status = 'No se ha podido enviar. Prueba de nuevo o escríbeme por correo.'
 
             } finally {
 
@@ -114,219 +123,105 @@ export default {
 
 
 <style scoped>
-
-.contact {
-    width: 80%;
-    max-width: 1100px;
-
-    margin: 120px auto 80px;
-
-    color: #f5f5f5;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.contact-header {
-    text-align: center;
-
-    margin-bottom: 45px;
-}
-
-
-.contact-header h1 {
-    margin: 0 0 20px;
-
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
-
-    letter-spacing: -1px;
-}
-
-
-.contact-header p {
-    max-width: 850px;
-
-    margin: 0 auto;
-
-    color: #aaa;
-
-    font-size: clamp(1rem, 2vw, 1.3rem);
-
-    line-height: 1.6;
-}
-
-
-.contact-header a {
-    color: #f5f5f5;
-
-    font-weight: 600;
-
-    text-decoration: none;
-
-    transition: color 0.2s ease;
-}
-
-
-.contact-header a:hover {
-    color: #8b5cf6;
-}
-
-
-/* =========================
-   FORM
-========================= */
-
 .contact-form {
     display: flex;
-
     flex-direction: column;
+    gap: 20px;
 
-    gap: 25px;
+    max-width: 760px;
+    margin: 0 auto;
 }
-
 
 .form-row {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
-    gap: 25px;
+    gap: 20px;
 }
 
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 
-.contact-form input,
-.contact-form textarea {
+.field span {
+    color: var(--cream-dim);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.field input,
+.field textarea {
     width: 100%;
 
-    box-sizing: border-box;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 14px;
 
-    border: 1px solid #303030;
-    border-radius: 15px;
+    background: var(--surface);
+    color: var(--cream);
 
-    outline: none;
-
-    background: #151515;
-    color: #f5f5f5;
-
-    font-family: inherit;
-    font-size: 16px;
+    font: inherit;
+    font-size: 17px;
 
     transition:
-        border-color 0.2s ease,
-        background-color 0.2s ease,
-        box-shadow 0.2s ease;
+        border-color var(--fast) var(--ease),
+        background-color var(--fast) var(--ease);
 }
 
-
-.contact-form input {
-    height: 65px;
-
-    padding: 0 20px;
+.field input {
+    height: 54px;
+    padding: 0 18px;
 }
 
-
-.contact-form textarea {
-    min-height: 360px;
-
-    padding: 20px;
-
+.field textarea {
+    min-height: 220px;
+    padding: 16px 18px;
     resize: vertical;
 }
 
-
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-    color: #999;
+.field input::placeholder,
+.field textarea::placeholder {
+    color: var(--muted);
 }
 
-
-/* =========================
-   FOCUS
-========================= */
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    border-color: #8b5cf6;
-
-    background: #181818;
-
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+.field input:hover,
+.field textarea:hover {
+    border-color: var(--cream-dim);
 }
 
-
-/* =========================
-   BUTTON
-========================= */
-
-.contact-form button {
-    width: 100%;
-
-    height: 60px;
-
-    border: none;
-    border-radius: 12px;
-
-    background: #f5f5f5;
-    color: #111;
-
-    font-family: inherit;
-    font-size: 17px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease;
+.field input:focus-visible,
+.field textarea:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+    border-color: transparent;
+    background: var(--surface-raised);
 }
 
-
-.contact-form button:hover:not(:disabled) {
-    background: #dcdcdc;
-
-    transform: translateY(-2px);
+.form-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
 }
 
-
-.contact-form button:active:not(:disabled) {
-    transform: translateY(0);
+.status {
+    margin: 0;
+    color: var(--cream-dim);
+    font-size: 15px;
 }
-
-
-.contact-form button:disabled {
-    opacity: 0.5;
-
-    cursor: not-allowed;
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 700px) {
-
-    .contact {
-        width: 90%;
-
-        margin-top: 100px;
-    }
-
-
     .form-row {
         grid-template-columns: 1fr;
-
-        gap: 20px;
     }
 
-
-    .contact-form textarea {
-        min-height: 280px;
+    .form-foot {
+        flex-direction: column-reverse;
+        align-items: stretch;
     }
 
+    .form-foot .btn {
+        justify-content: space-between;
+    }
 }
-
 </style>

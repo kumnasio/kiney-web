@@ -1,16 +1,18 @@
 <template>
-    <nav class="menu">
+    <nav class="menu" aria-label="Principal">
         <ul class="menu-list">
             <li>
-                <img
-                    class="logo"
-                    src="../assets/kiney-logo.jpg"
-                    alt="Logo"
-                >
+                <a href="#inicio" class="logo-link" aria-label="kiney, ir al inicio">
+                    <img
+                        class="logo"
+                        src="../assets/kiney-logo.jpg"
+                        alt=""
+                    >
+                </a>
             </li>
 
             <li v-for="item in menuItems" :key="item.name">
-                <a :href="item.path">
+                <a :href="item.path" class="menu-link">
                     {{ item.name }}
                 </a>
             </li>
@@ -25,22 +27,10 @@ export default {
     data() {
         return {
             menuItems: [
-                {
-                    name: 'Contenido',
-                    path: '/contenido'
-                },
-                {
-                    name: 'Mi setup',
-                    path: '/mi-setup'
-                },
-                {
-                    name: 'Comunidad',
-                    path: '/comunidad'
-                },
-                {
-                    name: 'Contacto',
-                    path: '/contacto'
-                }
+                { name: 'Contenido', path: '#contenido' },
+                { name: 'Mi setup', path: '#setup' },
+                { name: 'Comunidad', path: '#comunidad' },
+                { name: 'Contacto', path: '#contacto' }
             ]
         }
     }
@@ -48,32 +38,54 @@ export default {
 </script>
 
 <style scoped>
+/* Pestaña que cuelga del borde superior: parece una muesca recortada en el marco del hero */
 .menu {
     position: fixed;
-    top: 20px;
+    top: 0;
     left: 50%;
-    transform: translateX(-50%);
-
     z-index: 1000;
 
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 1px solid white;
-    border-radius: 20rem;
-    backdrop-filter: blur(10px);
+    width: min(680px, 100% - 2 * var(--gutter));
+    transform: translateX(-50%);
+
+    padding-top: var(--gutter);
+
+    background-color: var(--canvas);
+    border-radius: 0 0 22px 22px;
+}
+
+/* Curvas invertidas en las esquinas de arriba, como en la referencia */
+.menu::before,
+.menu::after {
+    content: "";
+    position: absolute;
+    top: var(--gutter);
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+}
+
+.menu::before {
+    right: 100%;
+    background: radial-gradient(circle at 0 100%, transparent 21.5px, var(--canvas) 22px);
+}
+
+.menu::after {
+    left: 100%;
+    background: radial-gradient(circle at 100% 100%, transparent 21.5px, var(--canvas) 22px);
 }
 
 .menu-list {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 
     list-style: none;
 
-    height: 5vh;
-    max-height: 5vh;
+    min-height: 56px;
 
     margin: 0;
-    padding: 0 8px;
+    padding: 0 10px 0 12px;
 }
 
 .menu-list li {
@@ -81,34 +93,54 @@ export default {
     align-items: center;
 }
 
-.logo {
+.logo-link {
     display: block;
+    border-radius: 50%;
+}
 
-    height: 4vh;
-    max-height: 4vh;
-    width: auto;
+.logo {
+    height: 34px;
+    width: 34px;
 
-    aspect-ratio: 1 / 1;
     object-fit: cover;
 
     border-radius: 50%;
 }
 
-.menu-list li a {
-    padding: 10px 20px;
+.menu-link {
+    padding: 8px clamp(8px, 1.6vw, 18px);
 
-    color: #f5f5f5;
-    text-decoration: none;
+    color: var(--cream-dim);
+    font-size: 14px;
+    letter-spacing: -0.016em;
 
-    border-radius: 20px;
+    border-radius: var(--r-pill);
 
     transition:
-        background-color 0.25s ease,
-        color 0.25s ease;
+        background-color var(--fast) var(--ease),
+        color var(--fast) var(--ease);
 }
 
-.menu-list li a:hover {
-    background-color: #b7b7b766;
+.menu-link:hover {
+    color: var(--cream);
+    background-color: var(--surface-raised);
+    text-decoration: none;
 }
 
+@media (max-width: 480px) {
+    .menu-list {
+        min-height: 52px;
+        padding: 0 6px 0 8px;
+    }
+
+    .logo {
+        height: 30px;
+        width: 30px;
+    }
+
+    .menu-link {
+        padding: 8px 7px;
+        font-size: 12.5px;
+    }
+}
 </style>
