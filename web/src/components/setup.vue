@@ -28,75 +28,51 @@
         </header>
 
 
-        <div class="products">
-            <article
-                v-for="product in currentProducts"
-                :key="selectedCategory + product.modelo"
-                class="product"
-            >
-                <div class="product-image">
-                    <img
-                        v-if="product.imagen"
-                        :src="product.imagen"
-                        :alt="product.modelo"
-                        width="400"
-                        height="300"
-                        loading="lazy"
-                    >
-                    <div v-else class="placeholder" aria-hidden="true">
-                        <i :class="['pi', product.icono || 'pi-box']"></i>
-                    </div>
-                </div>
+        <p v-if="error" class="aviso" role="status">
+            No se han podido cargar los productos. Recarga la página en un momento.
+        </p>
 
-                <div class="product-info">
-                    <span class="product-kind">{{ product.tipo }}</span>
-                    <h3>{{ product.modelo }}</h3>
+        <div v-else class="products" :aria-busy="cargando">
+            <template v-if="cargando">
+                <div v-for="n in 3" :key="n" class="esqueleto" aria-hidden="true"></div>
+            </template>
 
-                    <div class="product-foot">
-                        <span class="price">{{ product.precio }}</span>
+            <template v-else>
+                <ProductoCard
+                    v-for="p in actuales"
+                    :key="p.seccion + p.modelo"
+                    :etiqueta="p.tipo"
+                    :titulo="p.modelo"
+                    :precio="p.precio"
+                    :imagen="p.imagen"
+                    :enlace="p.enlace"
+                />
+            </template>
+        </div>
 
-                        <a
-                            :href="product.enlace"
-                            target="_blank"
-                            rel="noopener noreferrer sponsored"
-                            class="btn-ghost amazon-link"
-                            :aria-label="`Ver ${product.modelo} en Amazon (enlace de afiliado, se abre en otra pestaña)`"
-                        >
-                            Ver en Amazon
-                            <i class="pi pi-arrow-up-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
-            </article>
+        <div class="mas">
+            <RouterLink to="/recomendaciones" class="btn">
+                Ver todas mis recomendaciones
+                <span class="btn-arrow" aria-hidden="true"><i class="pi pi-arrow-right"></i></span>
+            </RouterLink>
         </div>
 
     </section>
 </template>
 
 
-<script>
-// Los productos se editan en web/src/data/setup.json (ver web/src/data/README.md)
-import setupData from '@/data/setup.json'
+<script setup>
+// Los productos salen de la pestaña "setup" de tu Google Sheets (ver web/src/data/README.md)
+import { computed, ref } from 'vue'
+import ProductoCard from './ProductoCard.vue'
+import { useHoja } from '@/composables/useHoja'
 
-export default {
-    name: 'Setup',
+const selectedCategory = ref('pc')
+const { filas, cargando, error } = useHoja('setup')
 
-    data() {
-        return {
-            selectedCategory: 'pc',
-            pc: setupData.pc,
-            perifericos: setupData.perifericos
-        }
-    },
-
-    computed: {
-        currentProducts() {
-            return this.selectedCategory === 'pc'
-                ? this.pc
-                : this.perifericos
-        }
-    }
-}
+const actuales = computed(() =>
+    filas.value.filter((p) => p.seccion?.toLowerCase().startsWith(selectedCategory.value === 'pc' ? 'pc' : 'perif'))
+)
 </script>
 
 
@@ -158,104 +134,29 @@ export default {
     gap: 20px;
 }
 
-.product {
-    overflow: hidden;
-
-    background: var(--glass-fill);
-    -webkit-backdrop-filter: var(--glass-blur);
-    backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--glass-edge);
-    box-shadow: var(--glass-shadow);
+.esqueleto {
+    aspect-ratio: 4 / 4.4;
     border-radius: var(--r-card);
-
-    transition:
-        transform var(--base) var(--ease),
-        border-color var(--base) var(--ease);
+    border: 1px solid var(--glass-edge);
+    background: linear-gradient(100deg, rgba(255, 255, 255, 0.03) 30%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.03) 70%);
+    background-size: 300% 100%;
+    animation: brillo 1.4s linear infinite;
 }
 
-.product:hover {
-    transform: translateY(-2px);
+@keyframes brillo {
+    from { background-position: 100% 0; }
+    to { background-position: 0 0; }
 }
 
-.product-image {
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 10%;
-
-    transition: transform var(--base) var(--ease);
-}
-
-.product:hover .product-image img {
-    transform: scale(1.03);
-}
-
-.product-info {
-    padding: 20px 22px 22px;
-}
-
-.product-kind {
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.product-info h3 {
-    margin: 4px 0 20px;
-
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
-}
-
-.product-foot {
+.mas {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
+    justify-content: center;
+    margin-top: 36px;
 }
 
-.price {
-    font-size: 17px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-}
-
-.product-foot .btn-ghost {
-    padding: 8px 14px;
-    font-size: 14px;
-}
-
-/* Naranja Amazon al pasar por el producto o por el enlace */
-.amazon-link {
-    transition:
-        background-color var(--fast) var(--ease),
-        border-color var(--fast) var(--ease),
-        color var(--fast) var(--ease),
-        box-shadow var(--fast) var(--ease);
-}
-
-.product:hover .amazon-link,
-.amazon-link:hover,
-.amazon-link:focus-visible {
-    background: var(--amazon);
-    border-color: var(--amazon);
-    color: var(--ink);
-    box-shadow: 0 6px 20px rgba(255, 153, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45);
-}
-
-.amazon-link:hover {
-    background: var(--amazon-hover);
-}
-
-.product:hover {
-    border-color: rgba(255, 153, 0, 0.35);
+.aviso {
+    text-align: center;
+    color: var(--cream-dim);
 }
 
 

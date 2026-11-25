@@ -1,30 +1,27 @@
 <template>
-  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <a class="skip-link" href="#principal">Saltar al contenido</a>
   <navbar />
-  <main id="principal">
-    <bienvenida />
-    <contenido />
-    <setup />
-    <comunidad />
-    <contacto />
+  <main id="principal" tabindex="-1">
+    <RouterView />
   </main>
 
   <footer class="site-footer">
-    <span>© {{ year }} kiney</span>
-    <span>
-      Foto de portada:
-      <a href="https://unsplash.com/photos/CaQ_KITtnVY" target="_blank" rel="noopener noreferrer">David Marcu / Unsplash</a>
-    </span>
+    <p class="afiliados">
+      Algunos enlaces son de afiliado: como afiliado de Amazon, obtengo ingresos por las compras
+      adscritas que cumplen los requisitos aplicables. A ti no te cuesta nada más.
+    </p>
+    <div class="footer-fila">
+      <span>© {{ year }} <span translate="no">kiney</span></span>
+      <span>
+        Foto de portada:
+        <a href="https://unsplash.com/photos/CaQ_KITtnVY" target="_blank" rel="noopener noreferrer">David Marcu / Unsplash</a>
+      </span>
+    </div>
   </footer>
 </template>
 
 <script setup>
 import navbar from './components/navbar.vue'
-import bienvenida from './components/bienvenida.vue'
-import contenido from './components/contenido.vue'
-import setup from './components/setup.vue'
-import comunidad from './components/comunidad.vue'
-import contacto from './components/contacto.vue'
 
 const year = new Date().getFullYear()
 </script>
@@ -54,11 +51,6 @@ const year = new Date().getFullYear()
 }
 
 .site-footer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 12px;
-
   width: min(100% - 2 * var(--gutter) - 24px, var(--content-max));
   margin: var(--section-gap) auto 0;
   padding: 28px 0 40px;
@@ -68,7 +60,24 @@ const year = new Date().getFullYear()
   font-size: 13px;
 }
 
+.afiliados {
+  max-width: 640px;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.footer-fila {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .site-footer a {
   color: var(--cream-dim);
+}
+
+main:focus {
+  outline: none;
 }
 </style>

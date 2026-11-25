@@ -2,7 +2,7 @@
     <nav class="menu" aria-label="Principal">
         <ul class="menu-list">
             <li>
-                <a href="#inicio" class="logo-link" aria-label="kiney, ir al inicio">
+                <RouterLink :to="{ path: '/', hash: '#inicio' }" class="logo-link" aria-label="kiney, ir al inicio">
                     <img
                         class="logo"
                         src="../assets/kiney-logo.jpg"
@@ -10,33 +10,36 @@
                         width="34"
                         height="34"
                     >
-                </a>
+                </RouterLink>
             </li>
 
-            <li v-for="item in menuItems" :key="item.name">
-                <a :href="item.path" class="menu-link">
+            <li v-for="item in menuItems" :key="item.name" :class="{ 'solo-escritorio': item.soloEscritorio }">
+                <RouterLink
+                    :to="item.to"
+                    class="menu-link"
+                    :class="{ activo: item.pagina && route.path === item.to }"
+                    :aria-current="item.pagina && route.path === item.to ? 'page' : undefined"
+                >
                     {{ item.name }}
-                </a>
+                </RouterLink>
             </li>
         </ul>
     </nav>
 </template>
 
-<script>
-export default {
-    name: 'Navbar',
+<script setup>
+import { useRoute } from 'vue-router'
 
-    data() {
-        return {
-            menuItems: [
-                { name: 'Contenido', path: '#contenido' },
-                { name: 'Mi setup', path: '#setup' },
-                { name: 'Comunidad', path: '#comunidad' },
-                { name: 'Contacto', path: '#contacto' }
-            ]
-        }
-    }
-}
+const route = useRoute()
+
+// Secciones de la portada (hash) y páginas aparte (pagina: true)
+const menuItems = [
+    { name: 'Vídeos', to: { path: '/', hash: '#contenido' } },
+    { name: 'Mi setup', to: { path: '/', hash: '#setup' } },
+    { name: 'Recomendaciones', to: '/recomendaciones', pagina: true },
+    { name: 'Comunidad', to: { path: '/', hash: '#comunidad' }, soloEscritorio: true },
+    { name: 'Contacto', to: { path: '/', hash: '#contacto' } }
+]
 </script>
 
 <style scoped>
@@ -47,7 +50,7 @@ export default {
     left: 50%;
     z-index: 1000;
 
-    width: min(640px, 100% - 2 * var(--gutter) - 16px);
+    width: min(720px, 100% - 2 * var(--gutter) - 16px);
     transform: translateX(-50%);
 
     border-radius: var(--r-pill);
@@ -138,8 +141,13 @@ export default {
     text-decoration: none;
 }
 
+.menu-link.activo {
+    color: var(--cream);
+}
+
 .menu-link:hover::after,
-.menu-link:focus-visible::after {
+.menu-link:focus-visible::after,
+.menu-link.activo::after {
     transform: scaleX(1);
     transform-origin: left center;
 }
@@ -156,13 +164,17 @@ export default {
     }
 
     .menu-link {
-        padding: 8px 7px;
+        padding: 8px 6px;
         font-size: 12.5px;
     }
 
     .menu-link::after {
-        left: 7px;
-        right: 7px;
+        left: 6px;
+        right: 6px;
+    }
+
+    .solo-escritorio {
+        display: none !important;
     }
 }
 </style>
