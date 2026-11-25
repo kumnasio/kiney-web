@@ -1,0 +1,19 @@
+# Dependencias y builds
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+
+# Sistema / editores
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Claude Code: ajustes personales (no compartir)
+.claude/settings.local.json
