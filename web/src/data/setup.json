@@ -1,0 +1,54 @@
+{
+  "pc": [
+    {
+      "tipo": "Procesador",
+      "modelo": "AMD Ryzen 7 7800X3D",
+      "precio": "399,99 €",
+      "imagen": "",
+      "icono": "pi-microchip",
+      "enlace": "TU_LINK_DE_AFILIADO"
+    },
+    {
+      "tipo": "Tarjeta gráfica",
+      "modelo": "NVIDIA GeForce RTX 4080",
+      "precio": "999,99 €",
+      "imagen": "",
+      "icono": "pi-desktop",
+      "enlace": "TU_LINK_DE_AFILIADO"
+    },
+    {
+      "tipo": "Memoria RAM",
+      "modelo": "32 GB DDR5",
+      "precio": "129,99 €",
+      "imagen": "",
+      "icono": "pi-server",
+      "enlace": "TU_LINK_DE_AFILIADO"
+    }
+  ],
+  "perifericos": [
+    {
+      "tipo": "Teclado",
+      "modelo": "Teclado mecánico",
+      "precio": "99,99 €",
+      "imagen": "",
+      "icono": "pi-th-large",
+      "enlace": "TU_LINK_DE_AFILIADO"
+    },
+    {
+      "tipo": "Ratón",
+      "modelo": "Ratón gaming inalámbrico",
+      "precio": "79,99 €",
+      "imagen": "",
+      "icono": "pi-bolt",
+      "enlace": "TU_LINK_DE_AFILIADO"
+    },
+    {
+      "tipo": "Auriculares",
+      "modelo": "Auriculares gaming",
+      "precio": "149,99 €",
+      "imagen": "",
+      "icono": "pi-headphones",
+      "enlace": "TU_LINK_DE_AFILIADO"
+    }
+  ]
+}

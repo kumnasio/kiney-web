@@ -31,33 +31,36 @@
         <div class="products">
             <article
                 v-for="product in currentProducts"
-                :key="selectedCategory + product.id"
+                :key="selectedCategory + product.modelo"
                 class="product"
             >
                 <div class="product-image">
                     <img
-                        v-if="product.image"
-                        :src="product.image"
-                        :alt="product.description"
+                        v-if="product.imagen"
+                        :src="product.imagen"
+                        :alt="product.modelo"
+                        width="400"
+                        height="300"
                         loading="lazy"
                     >
                     <div v-else class="placeholder" aria-hidden="true">
-                        <i :class="['pi', product.icon]"></i>
+                        <i :class="['pi', product.icono || 'pi-box']"></i>
                     </div>
                 </div>
 
                 <div class="product-info">
-                    <span class="product-kind">{{ product.name }}</span>
-                    <h3>{{ product.description }}</h3>
+                    <span class="product-kind">{{ product.tipo }}</span>
+                    <h3>{{ product.modelo }}</h3>
 
                     <div class="product-foot">
-                        <span class="price">{{ product.price }}</span>
+                        <span class="price">{{ product.precio }}</span>
 
                         <a
-                            :href="product.affiliateLink"
+                            :href="product.enlace"
                             target="_blank"
                             rel="noopener noreferrer sponsored"
-                            class="btn-ghost"
+                            class="btn-ghost amazon-link"
+                            :aria-label="`Ver ${product.modelo} en Amazon (enlace de afiliado, se abre en otra pestaña)`"
                         >
                             Ver en Amazon
                             <i class="pi pi-arrow-up-right" aria-hidden="true"></i>
@@ -72,93 +75,26 @@
 
 
 <script>
+// Los productos se editan en web/src/data/setup.json (ver web/src/data/README.md)
+import setupData from '@/data/setup.json'
+
 export default {
     name: 'Setup',
 
     data() {
         return {
-
             selectedCategory: 'pc',
-
-            pcComponents: [
-                {
-                    id: 1,
-                    name: 'Procesador',
-                    description: 'AMD Ryzen 7 7800X3D',
-                    price: '399,99 €',
-                    image: '',
-                    icon: 'pi-microchip',
-                    affiliateLink: 'TU_LINK_DE_AFILIADO'
-                },
-
-                {
-                    id: 2,
-                    name: 'Tarjeta gráfica',
-                    description: 'NVIDIA GeForce RTX 4080',
-                    price: '999,99 €',
-                    image: '',
-                    icon: 'pi-desktop',
-                    affiliateLink: 'TU_LINK_DE_AFILIADO'
-                },
-
-                {
-                    id: 3,
-                    name: 'Memoria RAM',
-                    description: '32 GB DDR5',
-                    price: '129,99 €',
-                    image: '',
-                    icon: 'pi-server',
-                    affiliateLink: 'TU_LINK_DE_AFILIADO'
-                }
-            ],
-
-
-            peripherals: [
-                {
-                    id: 1,
-                    name: 'Teclado',
-                    description: 'Teclado mecánico',
-                    price: '99,99 €',
-                    image: '',
-                    icon: 'pi-th-large',
-                    affiliateLink: 'TU_LINK_DE_AFILIADO'
-                },
-
-                {
-                    id: 2,
-                    name: 'Ratón',
-                    description: 'Ratón gaming inalámbrico',
-                    price: '79,99 €',
-                    image: '',
-                    icon: 'pi-bolt',
-                    affiliateLink: 'TU_LINK_DE_AFILIADO'
-                },
-
-                {
-                    id: 3,
-                    name: 'Auriculares',
-                    description: 'Auriculares gaming',
-                    price: '149,99 €',
-                    image: '',
-                    icon: 'pi-headphones',
-                    affiliateLink: 'TU_LINK_DE_AFILIADO'
-                }
-            ]
-
+            pc: setupData.pc,
+            perifericos: setupData.perifericos
         }
     },
 
-
     computed: {
-
         currentProducts() {
-
             return this.selectedCategory === 'pc'
-                ? this.pcComponents
-                : this.peripherals
-
+                ? this.pc
+                : this.perifericos
         }
-
     }
 }
 </script>
@@ -239,7 +175,6 @@ export default {
 
 .product:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.32);
 }
 
 .product-image {
@@ -295,6 +230,32 @@ export default {
 .product-foot .btn-ghost {
     padding: 8px 14px;
     font-size: 14px;
+}
+
+/* Naranja Amazon al pasar por el producto o por el enlace */
+.amazon-link {
+    transition:
+        background-color var(--fast) var(--ease),
+        border-color var(--fast) var(--ease),
+        color var(--fast) var(--ease),
+        box-shadow var(--fast) var(--ease);
+}
+
+.product:hover .amazon-link,
+.amazon-link:hover,
+.amazon-link:focus-visible {
+    background: var(--amazon);
+    border-color: var(--amazon);
+    color: var(--ink);
+    box-shadow: 0 6px 20px rgba(255, 153, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.amazon-link:hover {
+    background: var(--amazon-hover);
+}
+
+.product:hover {
+    border-color: rgba(255, 153, 0, 0.35);
 }
 
 

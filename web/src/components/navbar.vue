@@ -7,6 +7,8 @@
                         class="logo"
                         src="../assets/kiney-logo.jpg"
                         alt=""
+                        width="34"
+                        height="34"
                     >
                 </a>
             </li>
@@ -41,7 +43,7 @@ export default {
 /* Cápsula de cristal flotante, centrada arriba (Liquid Glass) */
 .menu {
     position: fixed;
-    top: calc(var(--gutter) + 12px);
+    top: calc(var(--gutter) + 12px + env(safe-area-inset-top, 0px));
     left: 50%;
     z-index: 1000;
 
@@ -100,23 +102,46 @@ export default {
 }
 
 .menu-link {
+    position: relative;
+    display: inline-block;
     padding: 8px clamp(8px, 1.6vw, 18px);
 
-    color: var(--cream);
+    color: var(--cream-dim);
     font-size: 14px;
     letter-spacing: -0.016em;
 
-    border-radius: var(--r-pill);
-
-    transition:
-        background-color var(--fast) var(--ease),
-        color var(--fast) var(--ease);
+    transition: color var(--base) var(--ease);
 }
 
-.menu-link:hover {
+/* Subrayado que se dibuja de izquierda a derecha y se recoge hacia la derecha */
+.menu-link::after {
+    content: "";
+    position: absolute;
+    left: clamp(8px, 1.6vw, 18px);
+    right: clamp(8px, 1.6vw, 18px);
+    bottom: 4px;
+
+    height: 1.5px;
+    border-radius: 2px;
+
+    background: linear-gradient(90deg, rgba(239, 232, 218, 0.4), var(--cream) 50%, rgba(239, 232, 218, 0.4));
+    box-shadow: 0 0 8px rgba(239, 232, 218, 0.45);
+
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 420ms var(--ease);
+}
+
+.menu-link:hover,
+.menu-link:focus-visible {
     color: var(--cream);
-    background-color: rgba(255, 255, 255, 0.14);
     text-decoration: none;
+}
+
+.menu-link:hover::after,
+.menu-link:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left center;
 }
 
 @media (max-width: 480px) {
@@ -133,6 +158,11 @@ export default {
     .menu-link {
         padding: 8px 7px;
         font-size: 12.5px;
+    }
+
+    .menu-link::after {
+        left: 7px;
+        right: 7px;
     }
 }
 </style>

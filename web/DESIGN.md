@@ -72,7 +72,9 @@ acción por bloque.
 3. **Navegación de cristal.** Una cápsula de cristal (ver "Material Liquid Glass") flota centrada
    arriba, dentro del marco del hero, y se queda fija al hacer scroll, desenfocando lo que pasa por
    debajo. Los enlaces son anclas a las secciones (`#contenido`, `#setup`, `#comunidad`,
-   `#contacto`).
+   `#contacto`). En hover, cada enlace pasa a crema y se dibuja debajo un subrayado de 1,5 px
+   con un brillo suave, de izquierda a derecha.
+
 4. **Botón primario.** Píldora de cristal más opaca (`glass-fill-strong`) con texto crema y, a la
    derecha, un círculo crema con una flecha `ink`. En hover la flecha avanza 3 px y el borde se
    aclara. El secundario es una píldora de cristal más ligera (`glass-fill`). No se usa ningún otro
@@ -85,7 +87,9 @@ acción por bloque.
    etiqueta de duración de los vídeos también usan cristal, en versión más ligera.
 7. **Color.** Solo crema sobre negro cálido. Detrás del contenido hay una luz ambiental fija, con
    halos cálidos y azulados muy suaves (`body::before`), para que el cristal tenga algo que desenfocar. El azul `link` se reserva para enlaces de texto y el
-   anillo de foco. Las marcas de terceros (Discord, Amazon, YouTube) aparecen solo en su icono.
+   anillo de foco. Las marcas de terceros (Discord, Amazon, YouTube) aparecen solo en su icono. La única
+   excepción es el enlace "Ver en Amazon", que se pone naranja Amazon (`#ff9900`) al pasar por el
+   producto o por el propio enlace.
 8. **Imágenes sin contenido.** Nunca debe verse un `<img>` roto. Sin imagen, el hueco mantiene su
    `aspect-ratio` y muestra un fondo `surface-raised` con un icono centrado en `muted`.
 9. **Accesibilidad.** Foco visible con `:focus-visible` (anillo de 2 px `focus` y 3 px de separación),

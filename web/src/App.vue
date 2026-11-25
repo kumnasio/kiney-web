@@ -1,6 +1,7 @@
 <template>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <navbar />
-  <main>
+  <main id="principal">
     <bienvenida />
     <contenido />
     <setup />
@@ -29,6 +30,29 @@ const year = new Date().getFullYear()
 </script>
 
 <style scoped>
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 2000;
+
+  padding: 10px 16px;
+  border-radius: var(--r-pill);
+
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 500;
+
+  transform: translateY(-150%);
+  transition: transform var(--fast) var(--ease);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+  text-decoration: none;
+}
+
 .site-footer {
   display: flex;
   flex-wrap: wrap;

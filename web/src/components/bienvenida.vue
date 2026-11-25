@@ -5,13 +5,15 @@
                 class="hero-photo"
                 src="../assets/hero.jpg"
                 alt=""
+                width="2400"
+                height="1400"
                 fetchpriority="high"
             >
             <div class="hero-shade" aria-hidden="true"></div>
             <div class="hero-grain" aria-hidden="true"></div>
 
             <div class="hero-bottom">
-                <h1 id="hero-title" class="wordmark enter" style="--d: 0ms">
+                <h1 id="hero-title" class="wordmark enter" style="--d: 0ms" translate="no">
                     kiney<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.6 6.5 5.5 11.4 12 12-6.5.6-11.4 5.5-12 12-.6-6.5-5.5-11.4-12-12C6.5 11.4 11.4 6.5 12 0Z" fill="currentColor"/></svg>
                 </h1>
 

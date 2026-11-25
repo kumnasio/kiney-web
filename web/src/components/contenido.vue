@@ -16,10 +16,12 @@
                     class="channel-logo"
                     src="../assets/kiney-logo.jpg"
                     alt=""
+                    width="64"
+                    height="64"
                 >
 
                 <div>
-                    <h3 class="channel-name">kiney</h3>
+                    <h3 class="channel-name" translate="no">kiney</h3>
                     <p class="channel-meta">
                         @kiney · {{ channel.subscribers }} suscriptores · {{ channel.videos }} vídeos
                     </p>
@@ -50,6 +52,8 @@
                             v-if="video.thumbnail"
                             :src="video.thumbnail"
                             alt=""
+                            width="1280"
+                            height="720"
                             loading="lazy"
                         >
                         <div v-else class="placeholder" aria-hidden="true">
@@ -239,6 +243,12 @@ export default {
 }
 
 .video-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+
     margin: 14px 0 4px;
 
     font-size: 17px;
