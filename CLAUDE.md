@@ -24,7 +24,9 @@ Node: `^22.18.0 || >=24.12.0` (ver `web/package.json`).
 
 ## Convenciones
 
-- Componentes en `web/src/components/`, un archivo `.vue` por sección de la página (navbar, bienvenida, contenido, comunidad, contacto…).
+- Componentes en `web/src/components/`, un archivo `.vue` por sección de la página (navbar, bienvenida, contenido, comunidad, contacto…). Páginas en `web/src/views/` con `vue-router` (`web/src/router.js`): `/` y `/recomendaciones`.
+- Productos (Mi setup y Recomendaciones): salen de Google Sheets publicado como CSV vía `useHoja()` (`web/src/composables/useHoja.js`); los enlaces van en `web/src/data/fuentes.js` y la copia de respaldo en `web/public/data/*.csv`. Guía para el usuario en `web/src/data/README.md`. No usar JSON ni Pinia para estos datos.
+- Diseño: seguir `web/DESIGN.md` (oscuro cinematográfico + Apple Liquid Glass).
 - Alias `@` → `web/src` (configurado en `vite.config.js` y `jsconfig.json`).
 - UI con PrimeVue (tema Aura de `@primeuix/themes`) y `primeicons`.
 - No subir `node_modules/` ni `dist/` (están en `.gitignore`).
