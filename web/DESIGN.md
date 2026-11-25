@@ -1,6 +1,6 @@
 ---
 version: 1
-name: kiney — cine oscuro × Apple
+name: kiney — cine oscuro × Apple Liquid Glass
 description: >-
   Web de un creador de contenido sobre setups y tecnología. Une una estética cinematográfica
   (hero enmarcado con foto cálida y grano de película, wordmark gigante en crema, navegación en
@@ -69,25 +69,44 @@ acción por bloque.
 2. **Wordmark.** "kiney" en crema, tamaño `wordmark`, abajo a la izquierda y pegado al borde
    inferior. A su lado va la estrella de 4 puntas del logo, como el asterisco de la referencia. A la
    derecha, un texto corto de 2–3 líneas y el botón primario.
-3. **Navegación en pestaña.** Barra del color `canvas` que cuelga del borde superior, con las
-   esquinas inferiores redondeadas, para que parezca una muesca recortada en el marco. Es fija al
-   hacer scroll. Los enlaces son anclas a las secciones (`#contenido`, `#setup`, `#comunidad`,
+3. **Navegación de cristal.** Una cápsula de cristal (ver "Material Liquid Glass") flota centrada
+   arriba, dentro del marco del hero, y se queda fija al hacer scroll, desenfocando lo que pasa por
+   debajo. Los enlaces son anclas a las secciones (`#contenido`, `#setup`, `#comunidad`,
    `#contacto`).
-4. **Botón primario.** Píldora crema con texto `ink` y, a la derecha, un círculo `ink` con una flecha
-   crema. En hover la flecha avanza 3 px. El secundario es una píldora con borde `hairline-strong` y
-   texto crema. No se usa ningún otro estilo de botón, tampoco el naranja de Amazon.
+4. **Botón primario.** Píldora de cristal más opaca (`glass-fill-strong`) con texto crema y, a la
+   derecha, un círculo crema con una flecha `ink`. En hover la flecha avanza 3 px y el borde se
+   aclara. El secundario es una píldora de cristal más ligera (`glass-fill`). No se usa ningún otro
+   estilo de botón, tampoco el naranja de Amazon.
 5. **Secciones al estilo Apple.** Cada una tiene un eyebrow, un titular `display` centrado y una
    entradilla `lead` en `muted`; debajo va el contenido en `content-max`. Entre secciones se deja
    `section-gap`. No hay líneas divisorias: separa el aire.
-6. **Tarjetas.** Fondo `surface`, borde `hairline` y `radius.card`, sin sombras. En hover suben
-   2 px, el borde pasa a `hairline-strong` y la imagen interior hace zoom 1.03.
-7. **Color.** Solo crema sobre negro cálido. El azul `link` se reserva para enlaces de texto y el
+6. **Tarjetas.** Son de cristal, con `radius.card`. En hover suben 2 px, el borde se aclara y la
+   imagen interior hace zoom 1.03. Los campos del formulario, el selector PC/Periféricos y la
+   etiqueta de duración de los vídeos también usan cristal, en versión más ligera.
+7. **Color.** Solo crema sobre negro cálido. Detrás del contenido hay una luz ambiental fija, con
+   halos cálidos y azulados muy suaves (`body::before`), para que el cristal tenga algo que desenfocar. El azul `link` se reserva para enlaces de texto y el
    anillo de foco. Las marcas de terceros (Discord, Amazon, YouTube) aparecen solo en su icono.
 8. **Imágenes sin contenido.** Nunca debe verse un `<img>` roto. Sin imagen, el hueco mantiene su
    `aspect-ratio` y muestra un fondo `surface-raised` con un icono centrado en `muted`.
 9. **Accesibilidad.** Foco visible con `:focus-visible` (anillo de 2 px `focus` y 3 px de separación),
    etiquetas en todos los campos, `prefers-reduced-motion` respetado, contraste AA y
    `scroll-margin-top` en las secciones para que la navegación no tape los títulos.
+
+## Material Liquid Glass
+
+Es una aproximación en CSS al cristal de Apple. Los tokens están en `web/src/style.css` y la clase
+`.glass` los aplica todos juntos.
+
+- **Relleno:** degradado vertical blanco translúcido, de 14 % a 4 % (`--glass-fill`). Los elementos
+  que necesitan más presencia usan de 26 % a 10 % (`--glass-fill-strong`).
+- **Desenfoque:** `backdrop-filter: blur(22px) saturate(180%)`. La saturación es lo que hace que el
+  color de debajo "brille" a través del cristal.
+- **Borde:** 1 px blanco al 18 % (`--glass-edge`).
+- **Luz:** un brillo interior de 1 px arriba y un reflejo tenue abajo, más una sombra suave hacia
+  fuera (`--glass-shadow`). La navegación añade además un brillo especular radial en su parte
+  superior.
+- **Dónde usarlo:** en la navegación, los botones, las tarjetas, los campos, el selector y los chips.
+  Nunca en bloques de texto largo ni detrás de los titulares.
 
 ## Do / Don't
 

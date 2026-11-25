@@ -61,8 +61,11 @@ export default {
     margin: 0 auto;
     padding: 28px 28px 28px 32px;
 
-    background: var(--surface);
-    border: 1px solid var(--hairline);
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-edge);
+    box-shadow: var(--glass-shadow);
     border-radius: var(--r-card);
 
     transition:
@@ -72,7 +75,7 @@ export default {
 
 .discord-card:hover {
     transform: translateY(-2px);
-    border-color: var(--hairline-strong);
+    border-color: rgba(255, 255, 255, 0.32);
 }
 
 .discord-info {

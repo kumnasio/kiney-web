@@ -174,8 +174,11 @@ export default {
     margin-top: 32px;
     padding: 4px;
 
-    background: var(--surface);
-    border: 1px solid var(--hairline);
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-edge);
+    box-shadow: var(--glass-shadow);
     border-radius: var(--r-pill);
 }
 
@@ -205,8 +208,9 @@ export default {
 }
 
 .switch button[aria-pressed="true"] {
-    background: var(--cream);
-    color: var(--ink);
+    background: var(--glass-fill-strong);
+    color: var(--cream);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 
@@ -221,8 +225,11 @@ export default {
 .product {
     overflow: hidden;
 
-    background: var(--surface);
-    border: 1px solid var(--hairline);
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-edge);
+    box-shadow: var(--glass-shadow);
     border-radius: var(--r-card);
 
     transition:
@@ -232,13 +239,13 @@ export default {
 
 .product:hover {
     transform: translateY(-2px);
-    border-color: var(--hairline-strong);
+    border-color: rgba(255, 255, 255, 0.32);
 }
 
 .product-image {
     aspect-ratio: 4 / 3;
     overflow: hidden;
-    background: var(--surface-raised);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .product-image img {

@@ -136,8 +136,11 @@ export default {
     margin-bottom: 28px;
     padding: 20px 20px 20px 24px;
 
-    background: var(--surface);
-    border: 1px solid var(--hairline);
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-edge);
+    box-shadow: var(--glass-shadow);
     border-radius: var(--r-card);
 }
 
@@ -201,7 +204,7 @@ export default {
     border-radius: var(--r-thumb);
     border: 1px solid var(--hairline);
 
-    background: var(--surface-raised);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .thumb img,
@@ -226,7 +229,10 @@ export default {
     padding: 3px 7px;
     border-radius: 6px;
 
-    background: rgba(11, 10, 9, 0.8);
+    background: rgba(11, 10, 9, 0.45);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    backdrop-filter: blur(12px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     color: var(--cream);
     font-size: 12px;
     font-variant-numeric: tabular-nums;

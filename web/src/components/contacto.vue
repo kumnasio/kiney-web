@@ -154,10 +154,13 @@ export default {
 .field textarea {
     width: 100%;
 
-    border: 1px solid var(--hairline-strong);
+    border: 1px solid var(--glass-edge);
     border-radius: 14px;
 
-    background: var(--surface);
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
     color: var(--cream);
 
     font: inherit;
@@ -194,7 +197,7 @@ export default {
     outline: 2px solid var(--link);
     outline-offset: 2px;
     border-color: transparent;
-    background: var(--surface-raised);
+    background: rgba(255, 255, 255, 0.09);
 }
 
 .form-foot {

@@ -38,54 +38,46 @@ export default {
 </script>
 
 <style scoped>
-/* Pestaña que cuelga del borde superior: parece una muesca recortada en el marco del hero */
+/* Cápsula de cristal flotante, centrada arriba (Liquid Glass) */
 .menu {
     position: fixed;
-    top: 0;
+    top: calc(var(--gutter) + 12px);
     left: 50%;
     z-index: 1000;
 
-    width: min(680px, 100% - 2 * var(--gutter));
+    width: min(640px, 100% - 2 * var(--gutter) - 16px);
     transform: translateX(-50%);
 
-    padding-top: var(--gutter);
-
-    background-color: var(--canvas);
-    border-radius: 0 0 22px 22px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--glass-edge);
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    backdrop-filter: blur(24px) saturate(190%);
+    box-shadow: var(--glass-shadow);
 }
 
-/* Curvas invertidas en las esquinas de arriba, como en la referencia */
-.menu::before,
-.menu::after {
+/* Brillo especular en el borde superior */
+.menu::before {
     content: "";
     position: absolute;
-    top: var(--gutter);
-    width: 22px;
-    height: 22px;
+    inset: 0;
+    border-radius: inherit;
     pointer-events: none;
-}
-
-.menu::before {
-    right: 100%;
-    background: radial-gradient(circle at 0 100%, transparent 21.5px, var(--canvas) 22px);
-}
-
-.menu::after {
-    left: 100%;
-    background: radial-gradient(circle at 100% 100%, transparent 21.5px, var(--canvas) 22px);
+    background: radial-gradient(120% 140% at 50% -40%, rgba(255, 255, 255, 0.22), transparent 55%);
 }
 
 .menu-list {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     list-style: none;
 
-    min-height: 56px;
+    min-height: 52px;
 
     margin: 0;
-    padding: 0 10px 0 12px;
+    padding: 0 8px 0 9px;
 }
 
 .menu-list li {
@@ -110,7 +102,7 @@ export default {
 .menu-link {
     padding: 8px clamp(8px, 1.6vw, 18px);
 
-    color: var(--cream-dim);
+    color: var(--cream);
     font-size: 14px;
     letter-spacing: -0.016em;
 
@@ -123,7 +115,7 @@ export default {
 
 .menu-link:hover {
     color: var(--cream);
-    background-color: var(--surface-raised);
+    background-color: rgba(255, 255, 255, 0.14);
     text-decoration: none;
 }
 

@@ -149,12 +149,6 @@ export default {
     gap: 10px;
 }
 
-.hero-actions .btn-ghost {
-    background: rgba(11, 10, 9, 0.35);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
 /* Entrada */
 .enter {
     animation: rise 900ms var(--ease) both;
